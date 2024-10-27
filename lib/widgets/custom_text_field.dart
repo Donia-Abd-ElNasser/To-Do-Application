@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noteapp/widgets/Constants.dart';
 
 class CustomTextField extends StatelessWidget {
-   CustomTextField({super.key, required this.hint,  this.maxLines=1, this.onSaved, this.onChanged});
+   const CustomTextField({super.key, required this.hint,  this.maxLines=1, this.onSaved, this.onChanged});
 final String hint;
 final int maxLines;
 final void Function (String?)?onSaved;
@@ -38,7 +38,7 @@ final void Function(String)? onChanged;
   OutlineInputBorder BuildBorder([color]) {
     return OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: kPrimaryColor)
+        borderSide:  BorderSide(color:color?? kPrimaryColor)
       );
   }
 }

@@ -11,11 +11,10 @@ import 'cubits/cubit/notes_cubit.dart';
 
 void main() async {
   await Hive.initFlutter();
+  Bloc.observer = SimpleBlocObserver();
   Hive.registerAdapter(NoteModelAdapter());
 
   await Hive.openBox<NoteModel>(kNotesbox);
-
-  Bloc.observer = SimpleBlocObserver();
 
   runApp(const NotesApp());
 }
@@ -26,7 +25,7 @@ class NotesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-    create: (context) => NotesCubit(),
+      create: (context) => NotesCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),

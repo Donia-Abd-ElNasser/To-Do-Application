@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noteapp/cubits/cubit/add_note_cubit.dart';
+
+import 'Constants.dart';
 
 class ColorWidget extends StatelessWidget {
   const ColorWidget({super.key, required this.isActive, required this.color});
@@ -9,12 +12,13 @@ final Color color;
   Widget build(BuildContext context) {
     return isActive ?  CircleAvatar(
       radius: 30,
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromARGB(255, 165, 12, 12),
       child: CircleAvatar(
         radius: 26,
           backgroundColor: color,
       ),
-    ): CircleAvatar(
+    )
+    : CircleAvatar(
       radius: 30,
         backgroundColor: color,
     );
@@ -29,23 +33,13 @@ class ColorsListView extends StatefulWidget {
 
 class _ColorsListViewState extends State<ColorsListView> {
   int currentIndex=0;
-  List<Color>Colors=const [
-   Color(0xffFFAEBC),
-  Color(0xff3d5b59),
-  Color(0xffb5e5cf),
-  Color(0xfffcb5ac),
-  Color(0xffb99095),
-  Color(0xffA0E7E5),
-  Color(0xffB4F8C8),
-  Color(0xffFBE7C6),
-
-  ];
+  
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 30*2,
       child: ListView.builder(
-        itemCount: Colors.length,
+        itemCount: KColors.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context,index){
           return Padding(
@@ -53,13 +47,16 @@ class _ColorsListViewState extends State<ColorsListView> {
             child: GestureDetector(
               onTap: (){
                 currentIndex==index;
-              setState(){
+                BlocProvider.of<AddNoteCubit>(context).color=KColors[index];
+                
+                setState(() {
+                  
+                });
 
-              };
               },
               
               
-              child: ColorWidget(color: Colors[index],
+              child: ColorWidget(color: KColors[index],
                 isActive:currentIndex== index,)),
           );
         },),

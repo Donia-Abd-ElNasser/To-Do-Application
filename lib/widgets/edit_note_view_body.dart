@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noteapp/cubits/cubit/notes_cubit.dart';
 import 'package:noteapp/models/note_model.dart';
 
+import '../cubits/cubit/add_note_cubit.dart';
+import 'Constants.dart';
+import 'colors_listview.dart';
 import 'custom_appBar.dart';
 import 'custom_text_field.dart';
 
@@ -32,7 +35,7 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
                 widget.note.subTitle = content ?? widget.note.subTitle;
                 widget.note.save();
 
-                BlocProvider.of<NotesCubit>(context);
+                BlocProvider.of<NotesCubit>(context).fetchAllNotes();
                 Navigator.pop(context);
               },
               text: 'Edit Notes',
@@ -52,10 +55,55 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
               },
               hint: widget.note.subTitle,
               maxLines: 10,
-            )
+            ),
+             EditColorNotesList(note: widget.note,),
           ],
         ),
       ),
+    );
+  }
+}
+class EditColorNotesList extends StatefulWidget {
+  const EditColorNotesList({super.key, required this.note});
+final NoteModel note;
+  @override
+  State<EditColorNotesList> createState() => _EditColorNotesListState();
+}
+
+class _EditColorNotesListState extends State<EditColorNotesList> {
+ late int currentIndex;
+ @override
+ void initState(){
+currentIndex=KColors.indexOf(Color(widget.note.color));
+super.initState();
+ }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 30*2,
+      child: ListView.builder(
+        itemCount: KColors.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context,index){
+          return Padding(
+            padding: const EdgeInsets.all(4),
+            child: GestureDetector(
+              onTap: (){
+                currentIndex==index;
+              widget.note.color==KColors[index].value;
+                
+                setState(() {
+                  
+                });
+
+              },
+              
+              
+              child: ColorWidget(color: KColors[index],
+                isActive:currentIndex== index,)),
+          );
+        },),
     );
   }
 }

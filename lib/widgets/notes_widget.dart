@@ -41,9 +41,10 @@ final NoteModel note;
                 ),),
             ),
               trailing: IconButton(
-                onPressed: (){note.delete;
+                onPressed: (){note.delete();
                 print('deleeeeete');
                 BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+              
                 },
                 
               icon: const Icon(Icons.delete,color: Colors.black,size: 35,),),
