@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:noteapp/widgets/Constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, required this.hint,  this.maxLines=1});
+   CustomTextField({super.key, required this.hint,  this.maxLines=1, this.onSaved, this.onChanged});
 final String hint;
 final int maxLines;
+final void Function (String?)?onSaved;
+final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: TextField(
+      child: TextFormField(
+        onChanged: onChanged,
+        onSaved: onSaved,
+        validator: (value){
+          if(value?.isEmpty??true) {
+            return 'Field is required';
+          } else {
+            return null;
+          }
+        },
         maxLines: maxLines,
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
