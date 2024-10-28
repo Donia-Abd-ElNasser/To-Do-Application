@@ -6,24 +6,26 @@ import 'Constants.dart';
 
 class ColorWidget extends StatelessWidget {
   const ColorWidget({super.key, required this.isActive, required this.color});
-final bool isActive;
-final Color color;
+  final bool isActive;
+  final Color color;
   @override
   Widget build(BuildContext context) {
-    return isActive ?  CircleAvatar(
-      radius: 30,
-        backgroundColor: const Color.fromARGB(255, 165, 12, 12),
-      child: CircleAvatar(
-        radius: 26,
-          backgroundColor: color,
-      ),
-    )
-    : CircleAvatar(
-      radius: 30,
-        backgroundColor: color,
-    );
+    return isActive
+        ? CircleAvatar(
+            radius: 30,
+            backgroundColor:  Colors.black,
+            child: CircleAvatar(
+              radius: 26,
+              backgroundColor: color,
+            ),
+          )
+        : CircleAvatar(
+            radius: 30,
+            backgroundColor: color,
+          );
   }
 }
+
 class ColorsListView extends StatefulWidget {
   const ColorsListView({super.key});
 
@@ -32,34 +34,31 @@ class ColorsListView extends StatefulWidget {
 }
 
 class _ColorsListViewState extends State<ColorsListView> {
-  int currentIndex=0;
-  
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30*2,
+      height: 35 * 2,
       child: ListView.builder(
         itemCount: KColors.length,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context,index){
+        itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(4),
             child: GestureDetector(
-              onTap: (){
-                currentIndex==index;
-                BlocProvider.of<AddNoteCubit>(context).color=KColors[index];
-                
-                setState(() {
-                  
-                });
-
-              },
-              
-              
-              child: ColorWidget(color: KColors[index],
-                isActive:currentIndex== index,)),
+                onTap: () {
+                  currentIndex = index;
+                  BlocProvider.of<AddNoteCubit>(context).color = KColors[index];
+                   setState(() {});
+                },
+                child: ColorWidget(
+                  color: KColors[index],
+                  isActive: currentIndex == index,
+                )),
           );
-        },),
+        },
+      ),
     );
   }
 }
